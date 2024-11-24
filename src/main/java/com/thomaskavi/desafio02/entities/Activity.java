@@ -1,11 +1,8 @@
 package com.thomaskavi.desafio02.entities;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,19 +34,21 @@ public class Activity {
   @JoinColumn(name = "category_id", nullable = false)
   private Category category;
 
-  @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<Block> blocks = new ArrayList<>();
+  @OneToMany(mappedBy = "activity")
+  private Set<Block> blocks = new HashSet<>();
 
   @ManyToMany(mappedBy = "activities") // Referência ao campo "activities" de Participant
   private Set<Participant> participants = new HashSet<>();
 
-  public Activity(Long id, String name, String description, Double price, Category category, List<Block> blocks) {
+  public Activity(Long id, String name, String description, Double price, Category category, Set<Block> blocks,
+      Set<Participant> participants) {
     this.id = id;
     this.name = name;
     this.description = description;
     this.price = price;
     this.category = category;
     this.blocks = blocks;
+    this.participants = participants;
   }
 
   public Activity() {
@@ -95,12 +94,12 @@ public class Activity {
     this.category = category;
   }
 
-  public List<Block> getBlocks() {
+  public Set<Block> getBlocks() {
     return blocks;
   }
 
-  public void setBlocks(List<Block> blocks) {
-    this.blocks = blocks;
+  public Set<Participant> getParticipants() {
+    return participants;
   }
 
   @Override

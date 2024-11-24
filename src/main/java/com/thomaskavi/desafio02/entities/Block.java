@@ -1,6 +1,6 @@
 package com.thomaskavi.desafio02.entities;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,13 +21,13 @@ public class Block {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column(name = "start_time", nullable = false)
+  private Instant startTime;
+
+  @Column(name = "end_time", nullable = false)
+  private Instant endTime;
+
   @ManyToOne
   @JoinColumn(name = "activity_id", nullable = false)
   private Activity activity;
-
-  @Column(name = "start_time", nullable = false)
-  private LocalDateTime startTime;
-
-  @Column(name = "end_time", nullable = false)
-  private LocalDateTime endTime;
 }
